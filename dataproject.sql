@@ -75,6 +75,25 @@ WHERE title Ilike '%Analyst%';
 
 12.12.	How many different job titles do not contain either the word ‘Analyst’ or the word ‘Analytics’? What word do these positions have in common?
 
+SELECT DISTINCT title
+FROM data_analysts_jobs
+WHERE title NOT ILike '%Analyst%' AND title NOT ILike '%Analytics%';
+-- Answer 4. They all contain the word Tableau in the job title
+
+-- **BONUS:**
+--You want to understand which jobs requiring SQL are hard to fill. Find the number of jobs by industry (domain) that require SQL and have been posted longer than 3 weeks. Disregard any postings where the domain is NULL. Order your results so that the domain with the greatest number of `hard to fill` jobs is at the top. Which three industries are in the top 4 on this list? How many jobs have been listed for more than 3 weeks for each of the top 4?
+
+SELECT COUNT (title), domain
+FROM data_analysts_jobs
+WHERE skill ILike '%SQL%'
+AND days_since_posting > 21
+AND domain IS NOT NULL
+GROUP by DISTINCT(domain)
+ORDER BY COUNT (title) DESC;
+
+
+  -- ANSWER internet and software(62), banks and financial services(61), consulting and business services(57), healthcare(52)
+
 
 
 
